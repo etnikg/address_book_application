@@ -1,4 +1,3 @@
-// Data Models
 export interface Contact {
   id: string;
   firstName: string;

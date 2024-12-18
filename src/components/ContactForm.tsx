@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Contact, FormData, FormErrors, ContactFormProps } from '../types';
+import { FormData, FormErrors, ContactFormProps } from '../types';
 import { validateEmail, validateRequired } from '../utils/validation';
 import { getNames, getCode } from 'country-list';
 import { VALIDATION_MESSAGES } from '../constants/general';
@@ -17,6 +17,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contacts, onSave }) =>
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const countries = getNames().map(name => ({ name, code: getCode(name) }));
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (id && contacts) {
@@ -31,6 +33,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contacts, onSave }) =>
       }
     }
   }, [id, contacts]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const validateForm = useCallback((): boolean => {
     const newErrors: FormErrors = {};
@@ -122,19 +137,39 @@ export const ContactForm: React.FC<ContactFormProps> = ({ contacts, onSave }) =>
 
       <div className="form-group">
         <label htmlFor="country">Country</label>
-        <select
-          id="country"
-          name="country"
-          value={formData.country}
-          onChange={handleInputChange}
-        >
-          <option value="">Select a country</option>
-          {countries.map(country => (
-            <option key={country.code} value={country.code}>
-              {country.name}
-            </option>
-          ))}
-        </select>
+        <div className="custom-select" ref={dropdownRef}>
+          <button
+            type="button"
+            id="country"
+            onClick={() => setIsOpen(!isOpen)}
+            className="select-button"
+            aria-label="Select country"
+            data-empty={!formData.country}
+          >
+            {formData.country 
+              ? countries.find(c => c.code === formData.country)?.name || 'Select a country'
+              : 'Select a country'}
+          </button>
+          {isOpen && (
+            <div className="select-dropdown">
+              {countries.map(country => (
+                <button
+                  type="button"
+                  key={country.code}
+                  onClick={() => {
+                    handleInputChange({
+                      target: { name: 'country', value: country.code }
+                    } as React.ChangeEvent<HTMLSelectElement>);
+                    setIsOpen(false);
+                  }}
+                  className={`option ${formData.country === country.code ? 'selected' : ''}`}
+                >
+                  {country.name || 'Unknown country'}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         {errors.country && <span className="error">{errors.country}</span>}
       </div>
 

@@ -14,15 +14,20 @@ body {
 .app {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 }
 
 .navigation {
-  background-color: white;
+  background-color: #e3f2fd;
   padding: 1rem 2rem;
   margin-bottom: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin: 0;
+  width: 100%;
 }
 
 .navigation ul {
@@ -68,6 +73,7 @@ body {
 .contact-list {
   display: grid;
   gap: 1rem;
+  padding-top: 1rem;
 }
 
 .contact-card {
@@ -97,6 +103,7 @@ body {
 
 .form-group {
   margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .form-group label {
@@ -114,6 +121,8 @@ body {
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .form-group input:focus,
@@ -222,6 +231,8 @@ button:active {
 
   .navigation {
     padding: 0.75rem;
+    margin: 0.5rem;
+    border-radius: 8px;
   }
 
   .navigation ul {
@@ -258,6 +269,15 @@ button:active {
   .button-group button {
     width: 100%;
   }
+
+  .navigation {
+    margin: 0 -1rem 1rem -1rem;
+    border-radius: 0;
+  }
+
+  .app {
+    padding: 0 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -283,4 +303,115 @@ button:active {
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1.5rem;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #4a5568;
+  pointer-events: none;
+}
+
+.select-wrapper select:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.select-wrapper select option {
+  padding: 12px;
+  background-color: white;
+}
+
+.select-wrapper select:focus option {
+  max-height: 200px;
+}
+
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.select-button {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  padding-right: 2rem;
+  color: #2d3748;
+}
+
+.select-button:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.select-button[data-empty="true"] {
+  color: #a0aec0;
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-top: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.option {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: #2d3748;
+}
+
+.option:hover {
+  background-color: #f7fafc;
+}
+
+.option.selected {
+  background-color: #ebf8ff;
+  color: #2b6cb0;
 }

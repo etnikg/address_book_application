@@ -1,14 +1,13 @@
 import { Contact } from '../models/Contact';
+import { STORAGE_KEY } from '../constants/general';
 
 export class StorageService {
-  private STORAGE_KEY = 'address_book_contacts';
-
   saveContacts(contacts: Contact[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(contacts));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
   }
 
   getContacts(): Contact[] {
-    const contacts = localStorage.getItem(this.STORAGE_KEY);
+    const contacts = localStorage.getItem(STORAGE_KEY);
     if (!contacts) return [];
     
     try {

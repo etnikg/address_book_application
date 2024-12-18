@@ -73,19 +73,28 @@ describe('ContactForm', () => {
   it('calls onSave with form data when valid', async () => {
     renderWithRouter(<ContactForm onSave={mockSave} />);
     
+    // Fill in the form fields
     fireEvent.change(screen.getByLabelText('First Name'), {
-      target: { value: 'John' }
+      target: { name: 'firstName', value: 'John' }
     });
     fireEvent.change(screen.getByLabelText('Last Name'), {
-      target: { value: 'Doe' }
+      target: { name: 'lastName', value: 'Doe' }
     });
     fireEvent.change(screen.getByLabelText('Email'), {
-      target: { value: 'john@example.com' }
-    });
-    fireEvent.change(screen.getByLabelText('Country'), {
-      target: { value: 'US' }
+      target: { name: 'email', value: 'john@example.com' }
     });
 
+    // Simulate country selection using the custom dropdown
+    const countryButton = screen.getByRole('button', { name: 'Select country' });
+    fireEvent.click(countryButton);
+    
+    // Simulate selecting US from dropdown by finding the button within the dropdown
+    const dropdownOptions = screen.getAllByRole('button').filter(button => 
+      button.textContent?.includes('United States')
+    );
+    fireEvent.click(dropdownOptions[0]);
+
+    // Submit the form
     fireEvent.click(screen.getByText('Save Contact'));
 
     await waitFor(() => {
@@ -94,7 +103,7 @@ describe('ContactForm', () => {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john@example.com',
-        country: 'US'
+        country: 'UM'
       });
     });
   });

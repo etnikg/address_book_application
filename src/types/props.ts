@@ -1,6 +1,5 @@
 import { Contact } from './models';
 
-// Component Props
 export interface ContactListProps {
   contacts: Contact[];
   onDelete: (id: string) => void;
