@@ -2,16 +2,6 @@
 
 A modern, responsive address book application built with React, TypeScript, and Parcel bundler. This application allows users to manage their contacts with features like adding, editing, and deleting contact information.
 
-## Features
-
-- 📝 Create, Read, Update, and Delete contacts
-- 📱 Responsive design that works on desktop and mobile devices
-- 🌍 International support with country selection
-- ✨ Modern UI with smooth animations and transitions
-- 💾 Persistent storage using localStorage
-- ✅ Form validation and error handling
-- 🎯 Accessibility features
-
 ## Technology Stack
 
 - React 16.14
