@@ -16,7 +16,7 @@ A modern, responsive address book application built with React, TypeScript, and 
 ### Prerequisites
 
 - Node.js (v10.24.1)
-- npm
+- npm (v6.14.12)
 
 ### Installation
 
